@@ -1,9 +1,6 @@
 plugins {
     `kotlin-dsl`
-    `java-gradle-plugin`
 }
-
-group = "com.kth.mockapi.articles.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17

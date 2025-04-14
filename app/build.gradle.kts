@@ -43,9 +43,6 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.article)
 
-    // RevenueCat
-    implementation(libs.revenuecat)
-    implementation(libs.revenuecat.ui)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
