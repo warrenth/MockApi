@@ -1,4 +1,6 @@
-## 📦 Navigation 인자 전달 방법 정리
+# 오픈 소스 DeepDive 하며 정리한 내용
+
+## Navigation 인자 전달 방법 정리
 
 멀티모듈 Compose 프로젝트에서 화면 간 데이터 전달 시 사용 되는 방법
 
