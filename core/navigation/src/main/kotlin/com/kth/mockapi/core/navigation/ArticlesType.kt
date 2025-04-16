@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import com.kth.mockapi.core.model.Article
 import kotlinx.serialization.json.Json
 
-object CatArticlesType : NavType<Article>(isNullableAllowed = false) {
+object ArticlesType : NavType<Article>(isNullableAllowed = false) {
 
   override fun put(bundle: Bundle, key: String, value: Article) {
     bundle.putParcelable(key, value)
