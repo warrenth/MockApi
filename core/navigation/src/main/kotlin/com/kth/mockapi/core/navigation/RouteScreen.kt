@@ -12,7 +12,7 @@ sealed class RouteScreen {
     @Serializable
     data class Detail(val article: Article) : RouteScreen() {
         companion object {
-            val typeMap = mapOf(typeOf<Detail>() to CatArticlesType)
+            val typeMap = mapOf(typeOf<Detail>() to ArticlesType)
         }
     }
 }
