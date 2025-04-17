@@ -1,10 +1,7 @@
 # Open Source DeepDive...
-온고지신 : 이미 배운 것을 복습하고 정리하는 과정을 통해 새로운 지식을 더 잘 이해하고 자신의 것을 만들 수 있다. 
-- - -
+온고지신 : 이미 배운 것을 복습하고 정리하는 과정을 통해 새로운 지식을 더 잘 이해하고 자신의 것을 만들 수 있다.
 ## 1. core:navigation
-- - -
 ## 1.1 멀티 모듈 Compose 에서 화면간 데이터 전달 방법. Navigation 사용법
-- - -
 ### 1.1.1 객체를 Navigation에 직접 전달 (`NavType` 사용)
 ```kotlin
 @Serializable
