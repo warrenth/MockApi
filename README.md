@@ -180,3 +180,5 @@ error("No colors provided")
 - 이 값이 변경되면 해당 값을 사용한 컴포저블들이 자동으로 Recomposition 됨  
 - UI가 동적으로 반응해야 하는 경우 사용  
 
+# 2. Core:Feature
+## 2.1 SharedTransition
