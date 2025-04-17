@@ -152,11 +152,31 @@ APIResponse 로 받은걸 별도의 Result로 만들거나 순수 객체로 넘�
 
 # 2. Core:DesignSystem
 ## 2.1 디자인 시스템
->앱 전역 스타일을 유연하게 적용하고 유지보수하기 위해 사용, 
-확장성과 재사용성, 미리보기, 다크모드 대응 면에서 강력한 구조
-### 장점
-- 모듈화 : 	core:designsystem만 수정해도 앱 전체 테마 수정 가능
-- 미리보기 대응 : Compose Preview에서도 테마 렌더링 정확하게 됨
-- 다크모드 대응 :	isSystemInDarkTheme()로 다크/라이트 자동 분기
-- 런타임 변경 가능 : 예: 사용자 설정에 따라 다크모드 토글 가능
-- 안정성 : 	@Immutable → Compose recomposition 성능 향상
+> Jetpack Compose 기반 앱에서 공통 디자인 묶음(색상, 배경, 테마)을 전역적으로 관리하고,  
+다크/라이트 모드 대응 및 미리보기, 테스트, 재사용성을 향상시키기 위한 디자인 시스템 모듈
+### 2.1.1 ArticleColors
+> 앱 전반에 사용되는 색상값을 정의한 데이터 클래스입니다.
+> `defaultLightColors()`, `defaultDarkColors()`를 통해 다크/라이트 테마를 자동 분기
+### 2.1.2 ArticlesBackground
+> 배경 색상과 elevation 정보를 묶은 테마 전용 클래스입니다.
+> 라이트/다크 모드에 따라 배경을 자동 설정
+### 2.1.3 ArticleTheme
+> 앱 전체 또는 특정 화면에 테마를 적용하는 래퍼 함수
+> CompositionLocalProvider 를 사용해 색상/배경을 하위 Composable 주입
+> 예) ArticlesTheme.colors.backgroundLight 로 Composable 어디서든 전역으로 접근 가능
+### 2.1.4 staticCompositionLocalOf, compositionLocalOf
+```kotlin
+val LocalBackgroundTheme = staticCompositionLocalOf { ArticleBackground() }
+```
+- ArticleBackground는 거의 고정 값 (예: 테마용 배경)  
+- 변경될 일이 거의 없고, 변경되더라도 UI를 리렌더링하지 않아도 되는 경우  
+- Recomposition 최적화됨 → 성능 향상  
+```kotlin
+val LocalColors = compositionLocalOf<ArticleColors> {
+error("No colors provided")
+}
+```
+- ArticleColors는 다크/라이트 등으로 바뀔 수 있는 동적 값  
+- 이 값이 변경되면 해당 값을 사용한 컴포저블들이 자동으로 Recomposition 됨  
+- UI가 동적으로 반응해야 하는 경우 사용  
+

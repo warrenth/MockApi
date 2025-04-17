@@ -1,7 +1,6 @@
 package com.kth.mockapi.core.designsystem.theme
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -9,6 +8,7 @@ import com.kth.mockapi.core.designsystem.R
 
 /**
  * 앱 전체에 사용하는 색상들을 하나의 클래스로 묶음
+ * 다크/라이트 테마에 맞는 색상 구성의 모음
  */
 @Immutable
 data class ArticleColors(
