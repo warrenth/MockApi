@@ -1,5 +1,5 @@
 # Open Source DeepDive...
-온고지신 : 이미 배운 것을 복습하고 정리하는 과정을 통해 새로운 지식을 더 잘 이해하고 자신의 것을 만들 수 있다.
+이미 배운 것을 복습하고 정리하는 과정을 통해 새로운 지식을 더 잘 이해하고 자신의 것을 만들 수 있다.
 ## 1. core:navigation
 ## 1.1 멀티 모듈 Compose 에서 화면간 데이터 전달 방법. Navigation 사용법
 ### 1.1.1 객체를 Navigation에 직접 전달 (`NavType` 사용)
@@ -125,11 +125,11 @@ suspend fun getArticles(): Response<List<Article>>
 suspend fun getArticles(): ApiResponse<List<Article>>
 
 ```
-#### suspendOnError 란? 
+#### 2.2.2 suspendOnError 란? 
 >응답은 받았지만 응답코드가 200이 아닌 경우  
 예) HTTP 4xx, 5xx 
 
-#### onException 란? 에러는 분기처리하고싶을때?  
+#### 2.2.3 onException 란? 에러는 분기처리하고싶을때?  
 >서버 연결 실패, 응답 파싱 실패   
 예) 인터넷 없음 (UnknownHostException)   
    타임아웃 (SocketTimeoutException)   
@@ -144,9 +144,19 @@ apiService.getSomething().onException {
     }
 }
 ```
-#### sandwich는 클린아키텍처 domain 계층에 의존성 생길까?
->`ApiResponse`는 Sandwich 라이브러리 타입으로, **data**계층에 속함 
-domain 계층은 외부 라이브러리에 의존하면 안되기 때문에 
-APIResponse 로 받은걸 별도의 Result로 만들거나 순수 객체로 넘겨줘야 하기 때문에 
+#### 2.2.4 sandwich는 클린아키텍처 domain 계층에 의존성 생길까?
+>`ApiResponse`는 Sandwich 라이브러리 타입으로, **data**계층에 속함   
+domain 계층은 외부 라이브러리에 의존하면 안됨.  
+APIResponse 로 받은걸 별도의 Result로 만들거나 순수 객체로 넘겨줘야 하기 때문에
 클린아키텍처에서는 잘 사용하지 않는다. 클린아키텍처를 사용하지 않고 빠르게 앱을 개발하기에는 좋을 수 있다.
 
+# 2. Core:DesignSystem
+## 2.1 디자인 시스템
+>앱 전역 스타일을 유연하게 적용하고 유지보수하기 위해 사용, 
+확장성과 재사용성, 미리보기, 다크모드 대응 면에서 강력한 구조
+### 장점
+- 모듈화 : 	core:designsystem만 수정해도 앱 전체 테마 수정 가능
+- 미리보기 대응 : Compose Preview에서도 테마 렌더링 정확하게 됨
+- 다크모드 대응 :	isSystemInDarkTheme()로 다크/라이트 자동 분기
+- 런타임 변경 가능 : 예: 사용자 설정에 따라 다크모드 토글 가능
+- 안정성 : 	@Immutable → Compose recomposition 성능 향상
