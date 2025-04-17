@@ -125,15 +125,16 @@ suspend fun getArticles(): Response<List<Article>>
 suspend fun getArticles(): ApiResponse<List<Article>>
 
 ```
-> suspendOnError 란? 
- 응답은 받았지만 응답코드가 200이 아닌 경우  
+#### suspendOnError 란? 
+>응답은 받았지만 응답코드가 200이 아닌 경우  
 예) HTTP 4xx, 5xx 
 
-> onException 란? 에러는 분기처리하고싶을때?  
- 서버 연결 실패, 응답 파싱 실패   
+#### onException 란? 에러는 분기처리하고싶을때?  
+>서버 연결 실패, 응답 파싱 실패   
 예) 인터넷 없음 (UnknownHostException)   
    타임아웃 (SocketTimeoutException)   
    JSON 파싱 실패 (JsonParseException)
+
 ```kotlin
 apiService.getSomething().onException {
     if (exception is UnknownHostException) {
@@ -143,8 +144,8 @@ apiService.getSomething().onException {
     }
 }
 ```
-> sandwich는 클린아키텍처 domain 계층에 의존성 생길까?
-`ApiResponse`는 Sandwich 라이브러리 타입으로, **data**계층에 속함 
+#### sandwich는 클린아키텍처 domain 계층에 의존성 생길까?
+>`ApiResponse`는 Sandwich 라이브러리 타입으로, **data**계층에 속함 
 domain 계층은 외부 라이브러리에 의존하면 안되기 때문에 
 APIResponse 로 받은걸 별도의 Result로 만들거나 순수 객체로 넘겨줘야 하기 때문에 
 클린아키텍처에서는 잘 사용하지 않는다. 클린아키텍처를 사용하지 않고 빠르게 앱을 개발하기에는 좋을 수 있다.
