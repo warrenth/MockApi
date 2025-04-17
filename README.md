@@ -1,11 +1,11 @@
-# 오픈 소스 DeepDive 하며 정리한 내용
-
-## Navigation 인자 전달 방법 정리
-
-멀티모듈 Compose 프로젝트에서 화면 간 데이터 전달 시 사용 되는 방법
-
-
-###  1. 객체를 Navigation에 직접 전달 (`NavType` 사용)
+# Open Source DeepDive...
+온고지신 : 이미 배운 것을 복습하고 정리하는 과정을 통해 새로운 지식을 더 잘 이해하고 자신의 것을 만들 수 있다. 
+- - -
+## 1. core:navigation
+- - -
+## 1.1 멀티 모듈 Compose 에서 화면간 데이터 전달 방법. Navigation 사용법
+- - -
+### 1.1.1 객체를 Navigation에 직접 전달 (`NavType` 사용)
 ```kotlin
 @Serializable
 data class Detail(val article: Article) : RouteScreen() {
@@ -28,18 +28,18 @@ object ArticlesType : NavType<Article>(isNullableAllowed = false) {
         Uri.encode(Json.encodeToString(value))
 }
 ```
-장점: 컴파일 타임에 타입 체크 가능 (타입 안전성), 객체 직렬화를 통해 route에 직접 encode 가능
+장점: 컴파일 타임에 타입 체크 가능 (타입 안전성), 객체 직렬화를 통해 route에 직접 encode 가능  
 단점: 객체마다 NavType 클래스를 따로 구현해야 함, 유지보수, 코드량 증가
 
-###  2. ID 값만 전달하고, Detail 화면에서 ViewModel로 다시 조회
-장점: NavType을 만들 필요 없음, 경로가 가볍고 명확함, Deep link 지원이 쉬움
+###  1.1.2 ID 값만 전달하고, Detail 화면에서 ViewModel로 다시 조회
+장점: NavType을 만들 필요 없음, 경로가 가볍고 명확함, Deep link 지원이 쉬움  
 단점: 화면에서 데이터를 다시 조회해야 함, (cache구현 or API)
 
-### 3. SharedViewModel 사용 (상태 공유)
-장점: NavArgs 없이 복잡한 객체 전달 가능, 빠름 (메모리에서 직접 가져옴)
+### 1.1.3 SharedViewModel 사용 (상태 공유)
+장점: NavArgs 없이 복잡한 객체 전달 가능, 빠름 (메모리에서 직접 가져옴)  
 단점: ViewModel 생명주기를 잘 관리해야 함, 화면 복원, deep link 처리 어려움
 
-###  4. 단순한 데이터 (String, Int 등)는 기본 NavArgs 사용
+### 1.1.4 단순한 데이터 (String, Int 등)는 기본 NavArgs 사용
 ```kotlin
 NavHost(navController = navHostController, startDestination = "home") {
     composable("home") {
@@ -62,10 +62,96 @@ NavHost(navController = navHostController, startDestination = "home") {
     }
 }
 ```
-장점: 설정이 간단하고 직관적, 기본 타입은 NavType 자동 지원
-단점: 복잡한 객체는 전달할 수 없음
+장점: 설정이 간단하고 직관적, 기본 타입은 NavType 자동 지원  
+단점: 복잡한 객체는 전달할 수 없음  
 
-📌 상황에 따라 추천되는 방식
-단순 타입(String, Int 등) 전달 -> 기본 NavArgs 사용
-객체 전달 & deep link 필요	-> NavType + Serializable 사용
-ID 기반 조회 구조 -> ID만 넘기고 ViewModel 에서 조회 (캐시 or API)
+📌 상황에 따라 추천되는 방식  
+- 단순 타입(String, Int 등) 전달 -> 기본 NavArgs 사용   
+- 객체 전달 & deep link 필요	-> NavType + Serializable 사용  
+- ID 기반 조회 구조 -> ID만 넘기고 ViewModel 에서 조회 (캐시 or API)  
+
+# 2. Core:Data 
+- - -
+## 2.1 코루틴 Dispatcher 전략 트레이드 오프
+- - -
+### 2.1.1 ViewModel 에서 Dispatchers.IO 직접 사용  
+>장점: 간단하고 직관적   
+단점: 테스트 시 Dispatcher.IO 대체 어려움  
+대안: Dispatchers.setMain(...) 같은 별도 세팅 필요
+
+### 2.1.2 ViewModelScope에서 Dispatcher 생략 (launch {})  
+>장점: 코드 깔끔, Retrofit + suspend 조합에선 내부적으로 Dispatcher 사용하여 별도 정의 필요 없음    
+단점: Room, 비-Retrofit 작업 을 같이 쓸 경우  MainThread 에서 실행 -> ANR  
+참고 오픈소스 : DroidKnights → 대부분의 suspend 호출에서 Dispatcher를 생략
+
+### 2.1.3 Dispatcher 주입 + Repository 내부에서 flowOn(...) 사용  
+```kotlin
+internal class ArticlesRepositoryImpl @Inject constructor(
+    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher
+) {
+    override fun getArticles(): Flow<List<Article>> =
+        flow {
+            emit(api.getArticles())
+        }.flowOn(ioDispatcher)
+}
+```
+>장점: Dispatcher 주입으로 테스트 시 유연하게 변경 가능  
+단점: 코드 초기 세팅 필요  
+참고 오픈소스 : Now in Android, Skydoves → Repository에서 Dispatcher 주입 후 flowOn(...) 처리
+
+📌 상황에 따라 추천 방식  
+``` 
+1. 빠르게 앱 구성 / Dispatcher 이해 낮음 ->  1번 방법  ViewModel에서 Dispatchers.IO   
+2. 대부분 Retrofit이고, UI에 집중 -> 2번 Dispatcher 생략    
+3. 테스트, 멀티모듈, 아키텍처 중요 -> ③ Dispatcher 주입 + flowOn 처리    
+4. (추천) 실무용 + Dispatcher 주입 추가 + 파싱 최적화
+
+ViewModel.launch {                        // 정의 없음 MainThread
+    └── repository.getArticles()          // Flow 시작됨
+        └── flowOn(IO)                    // API 호출 IO에서 수행
+    └── .map { sort }                    
+    └── .flowOn(Default)                  // 정렬, 파싱은 Default에서 수행
+    └── .collect { _uiState.value = it }  // 최종 UI 반영은 Main (기본)
+}
+``` 
+## 2.2 sandwich
+- - -
+### 2.2.1 왜 sandwich 를 쓰는가?
+Retrofit 에 문제점
+- try/catch + null 처리 지옥
+- 공통 에러 처리 
+- 반복적인 if (isSuccessful) 체크
+
+```kotlin
+// Retrofit의 기본 Call<T> → ApiResponse<T>로 자동 래핑
+addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+// 기본 형태
+suspend fun getArticles(): Response<List<Article>>
+// Sandwich가 만든 형태
+suspend fun getArticles(): ApiResponse<List<Article>>
+
+```
+suspendOnError 란? 
+> 응답은 받았지만 응답코드가 200이 아닌 경우  
+예) HTTP 4xx, 5xx 
+
+onException 란? 에러는 분기처리하고싶을때?  
+> 서버 연결 실패, 응답 파싱 실패   
+예) 인터넷 없음 (UnknownHostException)   
+   타임아웃 (SocketTimeoutException)   
+   JSON 파싱 실패 (JsonParseException)
+```kotlin
+apiService.getSomething().onException {
+    if (exception is UnknownHostException) {
+        // 네트워크 끊김일 경우
+    } else if (exception is SocketTimeoutException) {
+        // 응답이 너무 늦는 경우
+    }
+}
+```
+sandwich는 클린아키텍처 domain 계층에 의존성 생길까?
+> `ApiResponse`는 Sandwich 라이브러리 타입으로, **data**계층에 속함 
+> domain 계층은 외부 라이브러리에 의존하면 안되기 때문에 
+> APIResponse 로 받은걸 별도의 Result로 만들거나 순수 객체로 넘겨줘야 하기 때문에 
+> 클린아키텍처에서는 잘 사용하지 않는다. 클린아키텍처를 사용하지 않고 빠르게 앱을 개발하기에는 좋을 수 있다.
+
