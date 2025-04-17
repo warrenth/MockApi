@@ -67,10 +67,8 @@ NavHost(navController = navHostController, startDestination = "home") {
 - 객체 전달 & deep link 필요	-> NavType + Serializable 사용  
 - ID 기반 조회 구조 -> ID만 넘기고 ViewModel 에서 조회 (캐시 or API)  
 
-# 2. Core:Data 
-- - -
+# 2. Core:Data
 ## 2.1 코루틴 Dispatcher 전략 트레이드 오프
-- - -
 ### 2.1.1 ViewModel 에서 Dispatchers.IO 직접 사용  
 >장점: 간단하고 직관적   
 단점: 테스트 시 Dispatcher.IO 대체 어려움  
@@ -112,7 +110,6 @@ ViewModel.launch {                        // 정의 없음 MainThread
 }
 ``` 
 ## 2.2 sandwich
-- - -
 ### 2.2.1 왜 sandwich 를 쓰는가?
 Retrofit 에 문제점
 - try/catch + null 처리 지옥
@@ -128,12 +125,12 @@ suspend fun getArticles(): Response<List<Article>>
 suspend fun getArticles(): ApiResponse<List<Article>>
 
 ```
-suspendOnError 란? 
-> 응답은 받았지만 응답코드가 200이 아닌 경우  
+> suspendOnError 란? 
+ 응답은 받았지만 응답코드가 200이 아닌 경우  
 예) HTTP 4xx, 5xx 
 
-onException 란? 에러는 분기처리하고싶을때?  
-> 서버 연결 실패, 응답 파싱 실패   
+> onException 란? 에러는 분기처리하고싶을때?  
+ 서버 연결 실패, 응답 파싱 실패   
 예) 인터넷 없음 (UnknownHostException)   
    타임아웃 (SocketTimeoutException)   
    JSON 파싱 실패 (JsonParseException)
@@ -146,9 +143,9 @@ apiService.getSomething().onException {
     }
 }
 ```
-sandwich는 클린아키텍처 domain 계층에 의존성 생길까?
-> `ApiResponse`는 Sandwich 라이브러리 타입으로, **data**계층에 속함 
-> domain 계층은 외부 라이브러리에 의존하면 안되기 때문에 
-> APIResponse 로 받은걸 별도의 Result로 만들거나 순수 객체로 넘겨줘야 하기 때문에 
-> 클린아키텍처에서는 잘 사용하지 않는다. 클린아키텍처를 사용하지 않고 빠르게 앱을 개발하기에는 좋을 수 있다.
+> sandwich는 클린아키텍처 domain 계층에 의존성 생길까?
+`ApiResponse`는 Sandwich 라이브러리 타입으로, **data**계층에 속함 
+domain 계층은 외부 라이브러리에 의존하면 안되기 때문에 
+APIResponse 로 받은걸 별도의 Result로 만들거나 순수 객체로 넘겨줘야 하기 때문에 
+클린아키텍처에서는 잘 사용하지 않는다. 클린아키텍처를 사용하지 않고 빠르게 앱을 개발하기에는 좋을 수 있다.
 
