@@ -7,8 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import com.kth.mockapi.core.navigation.AppComposeNavigator
 import com.kth.mockapi.core.navigation.RouteScreen
 import com.kth.mockapi.ui.MockApiMain
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     @Inject

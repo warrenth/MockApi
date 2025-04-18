@@ -4,7 +4,7 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
 import javax.inject.Inject
 
-class MockApiomposeNavigator @Inject constructor() : AppComposeNavigator<RouteScreen>() {
+class MockApiComposeNavigator @Inject constructor() : AppComposeNavigator<RouteScreen>() {
 
   override fun navigate(route: RouteScreen, optionsBuilder: (NavOptionsBuilder.() -> Unit)?) {
     val options = optionsBuilder?.let { navOptions(it) }

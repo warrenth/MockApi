@@ -13,6 +13,6 @@ internal interface NavigationModule {
     @Binds
     @Singleton
     fun provideComposeNavigator(
-        catArticlesComposeNavigator: CatArticlesComposeNavigator,
+        mockApiComposeNavigator: MockApiComposeNavigator,
     ): AppComposeNavigator<RouteScreen>
 }
