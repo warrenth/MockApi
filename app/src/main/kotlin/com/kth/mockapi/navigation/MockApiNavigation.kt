@@ -18,11 +18,12 @@ import com.kth.mockapi.feature.home.HomeScreen
  *
  */
 fun NavGraphBuilder.mockApiNavigation(sharedTransitionScope: SharedTransitionScope) {
+    //sharedElement()를 Modifier에 쓸 수 있게 해주는 스코프. composable scope와 무관
     with(sharedTransitionScope) {
         /**
          *  sharedTransitionScope 안에서 composable{} 를 쓰고 있기 때문에
-         *  여기서 this 는 AnimationVisibilityScope (에니메이션 컨텍스트)를 의미함
-         *  이 화면이 등장하거나 사라질 때 사용할 전환 애니메이션 정보가 담긴 스코프를 넘겨줌.
+         *  composable 은 내부적으로 AnimationVisibilityScope 를 생성. (에니메이션 컨텍스트)를 의미함
+         *  this 는 화면이 등장하거나 사라질 때 사용할 전환 애니메이션 정보가 담긴 스코프를 넘겨줌.
          */
         composable<MockApiScreen.Home> {
             HomeScreen(animatedVisibilityScope = this)
