@@ -12,7 +12,7 @@ sealed interface MockApiScreen {
     @Serializable
     data class Detail(val article: Article) : MockApiScreen {
         companion object {
-            val typeMap = mapOf(typeOf<Detail>() to ArticlesType)
+            val typeMap = mapOf(typeOf<Article>() to ArticlesType)
         }
     }
 }

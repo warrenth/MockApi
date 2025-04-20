@@ -11,6 +11,8 @@ android {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+
     implementation(projects.core.model)
 
     implementation(libs.kotlinx.coroutines.android)
