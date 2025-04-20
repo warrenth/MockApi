@@ -1,12 +1,11 @@
 package com.kth.mockapi.ui
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.rememberNavController
 import com.kth.mockapi.core.designsystem.theme.ArticleTheme
 import com.kth.mockapi.core.navigation.AppComposeNavigator
-import com.kth.mockapi.core.navigation.RouteScreen
+import com.kth.mockapi.core.navigation.MockApiScreen
 import com.kth.mockapi.navigation.MockApiNavHost
 
 /**
@@ -14,7 +13,7 @@ import com.kth.mockapi.navigation.MockApiNavHost
  * rememberNavController : Navigation 상태를 관리할 Controller, 화면 전환 사
  */
 @Composable
-fun MockApiMain(composeNavigator: AppComposeNavigator<RouteScreen>) {
+fun MockApiMain(composeNavigator: AppComposeNavigator<MockApiScreen>) {
     ArticleTheme {
         val navHostController = rememberNavController()
 

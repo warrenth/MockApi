@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.kth.mockapi.core.data.repository.ArticlesRepository
 import com.kth.mockapi.core.model.Article
 import com.kth.mockapi.core.navigation.AppComposeNavigator
-import com.kth.mockapi.core.navigation.RouteScreen
+import com.kth.mockapi.core.navigation.MockApiScreen
 import com.skydoves.sandwich.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     repository: ArticlesRepository,
-    private val navigator: AppComposeNavigator<RouteScreen>
+    private val navigator: AppComposeNavigator<MockApiScreen>
 ) : ViewModel() {
 
     val uiState: StateFlow<HomeUiState> = repository.fetchArticles()
@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
         )
 
     fun navigateToDetails(article: Article) {
-        navigator.navigate(RouteScreen.Detail(article))
+        navigator.navigate(MockApiScreen.Detail(article))
     }
 }
 

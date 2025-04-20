@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.kth.mockapi.core.navigation.AppComposeNavigator
-import com.kth.mockapi.core.navigation.RouteScreen
+import com.kth.mockapi.core.navigation.MockApiScreen
 import com.kth.mockapi.ui.MockApiMain
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -14,13 +14,13 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    internal lateinit var composeNavigator: AppComposeNavigator<RouteScreen>
+    internal lateinit var composeNavigator: AppComposeNavigator<MockApiScreen>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MockApiMain(composeNavigator)
+            MockApiMain(composeNavigator = composeNavigator)
         }
     }
 }

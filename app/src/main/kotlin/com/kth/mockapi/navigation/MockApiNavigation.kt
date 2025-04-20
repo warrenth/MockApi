@@ -3,7 +3,7 @@ package com.kth.mockapi.navigation
 import androidx.compose.animation.SharedTransitionScope
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.kth.mockapi.core.navigation.RouteScreen
+import com.kth.mockapi.core.navigation.MockApiScreen
 import com.kth.mockapi.feature.article.DetailScreen
 import com.kth.mockapi.feature.home.HomeScreen
 
@@ -24,12 +24,12 @@ fun NavGraphBuilder.mockApiNavigation(sharedTransitionScope: SharedTransitionSco
          *  여기서 this 는 AnimationVisibilityScope (에니메이션 컨텍스트)를 의미함
          *  이 화면이 등장하거나 사라질 때 사용할 전환 애니메이션 정보가 담긴 스코프를 넘겨줌.
          */
-        composable<RouteScreen.Home> {
+        composable<MockApiScreen.Home> {
             HomeScreen(animatedVisibilityScope = this)
         }
 
-        composable<RouteScreen.Detail>(
-            typeMap = RouteScreen.Detail.typeMap,
+        composable<MockApiScreen.Detail>(
+            typeMap = MockApiScreen.Detail.typeMap,
         ) {
             DetailScreen(animatedVisibilityScope = this)
         }

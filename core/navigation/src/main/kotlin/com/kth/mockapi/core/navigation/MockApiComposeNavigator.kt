@@ -4,14 +4,14 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
 import javax.inject.Inject
 
-class MockApiComposeNavigator @Inject constructor() : AppComposeNavigator<RouteScreen>() {
+class MockApiComposeNavigator @Inject constructor() : AppComposeNavigator<MockApiScreen>() {
 
-  override fun navigate(route: RouteScreen, optionsBuilder: (NavOptionsBuilder.() -> Unit)?) {
+  override fun navigate(route: MockApiScreen, optionsBuilder: (NavOptionsBuilder.() -> Unit)?) {
     val options = optionsBuilder?.let { navOptions(it) }
     navigationCommands.tryEmit(ComposeNavigationCommand.NavigateToRoute(route, options))
   }
 
-  override fun navigateAndClearBackStack(route: RouteScreen) {
+  override fun navigateAndClearBackStack(route: MockApiScreen) {
     navigationCommands.tryEmit(
       ComposeNavigationCommand.NavigateToRoute(
         route,
@@ -22,11 +22,11 @@ class MockApiComposeNavigator @Inject constructor() : AppComposeNavigator<RouteS
     )
   }
 
-  override fun popUpTo(route: RouteScreen, inclusive: Boolean) {
+  override fun popUpTo(route: MockApiScreen, inclusive: Boolean) {
     navigationCommands.tryEmit(ComposeNavigationCommand.PopUpToRoute(route, inclusive))
   }
 
-  override fun <R> navigateBackWithResult(key: String, result: R, route: RouteScreen?) {
+  override fun <R> navigateBackWithResult(key: String, result: R, route: MockApiScreen?) {
     navigationCommands.tryEmit(
       ComposeNavigationCommand.NavigateUpWithResult(
         key = key,

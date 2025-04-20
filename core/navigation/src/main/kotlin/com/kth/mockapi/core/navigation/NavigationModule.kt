@@ -14,5 +14,5 @@ internal interface NavigationModule {
     @Singleton
     fun provideComposeNavigator(
         mockApiComposeNavigator: MockApiComposeNavigator,
-    ): AppComposeNavigator<RouteScreen>
+    ): AppComposeNavigator<MockApiScreen>
 }

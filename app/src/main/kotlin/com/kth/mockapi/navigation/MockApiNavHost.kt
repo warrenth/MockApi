@@ -4,7 +4,7 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.kth.mockapi.core.navigation.RouteScreen
+import com.kth.mockapi.core.navigation.MockApiScreen
 
 @Composable
 fun MockApiNavHost(navHostController: NavHostController) {
@@ -12,7 +12,7 @@ fun MockApiNavHost(navHostController: NavHostController) {
     SharedTransitionLayout {
         NavHost(    //Navigation의 시작점, Composable route 를 연결
             navController = navHostController,
-            startDestination = RouteScreen.Home,
+            startDestination = MockApiScreen.Home,
         ) {
             mockApiNavigation(this@SharedTransitionLayout)
         }

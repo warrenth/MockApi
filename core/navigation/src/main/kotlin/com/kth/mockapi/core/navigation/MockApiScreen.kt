@@ -4,17 +4,15 @@ import com.kth.mockapi.core.model.Article
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
-sealed interface RouteScreen {
+sealed interface MockApiScreen {
 
     @Serializable
-    data object Home: RouteScreen
+    data object Home: MockApiScreen
 
     @Serializable
-    data class Detail(val article: Article) : RouteScreen {
+    data class Detail(val article: Article) : MockApiScreen {
         companion object {
-            val typeMap = mapOf(
-                typeOf<Detail>() to ArticlesType
-            )
+            val typeMap = mapOf(typeOf<Detail>() to ArticlesType)
         }
     }
 }
