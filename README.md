@@ -187,5 +187,37 @@ error("No colors provided")
 - 이 값이 변경되면 해당 값을 사용한 컴포저블들이 자동으로 Recomposition 됨  
 - UI가 동적으로 반응해야 하는 경우 사용  
 
-# 2. Core:Feature
-## 2.1 SharedTransition
+# 3. Core:DesignSystem/util
+## 3.1 LocalWindowSizeClass 를 CompositionLocal + 공통 유틸 처리
+```kotlin
+// Local 정의
+val LocalWindowSizeClass = staticCompositionLocalOf<WindowSizeClass> {
+   error("WindowSizeClass not provided")
+}
+```
+```kotlin
+// CompositionLocalProvider 설정
+val windowSizeClass = calculateWindowSizeClass(LocalContext.current as Activity)
+CompositionLocalProvider(LocalWindowSizeClass provides windowSizeClass) {
+   AppContent()
+}
+```
+```kotlin
+// 반응형 계산
+@Composable
+fun rememberResponsiveGridCells(): GridCells {
+    return when (LocalWindowSizeClass.current.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> GridCells.Fixed(2)
+        WindowWidthSizeClass.Medium -> GridCells.Adaptive(160.dp)
+        WindowWidthSizeClass.Expanded -> GridCells.Adaptive(200.dp)
+        else -> GridCells.Fixed(2)
+    }
+}
+```
+```kotlin
+// 사용 예시
+LazyVerticalGrid(columns = rememberResponsiveGridCells()) { ... }
+```
+
+# 4. Core:Feature
+## 4.1 SharedTransition

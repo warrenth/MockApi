@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -37,13 +40,11 @@ import com.kth.mockapi.core.designsystem.component.ArticleCircularProgress
 import com.kth.mockapi.core.designsystem.component.ArticleTopAppBar
 import com.kth.mockapi.core.designsystem.component.sharedTransition
 import com.kth.mockapi.core.designsystem.theme.ArticleTheme
+import com.kth.mockapi.core.designsystem.util.rememberResponsiveGridCells
 import com.kth.mockapi.core.model.Article
 import com.kth.mockapi.core.model.MockUtils.mockArticle
 import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.glide.GlideImage
-import com.skydoves.landscapist.placeholder.shimmer.Shimmer
-import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 @Composable
 fun SharedTransitionScope.HomeScreen(
@@ -53,15 +54,19 @@ fun SharedTransitionScope.HomeScreen(
     // composable life cycle
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Column(modifier = Modifier.fillMaxSize().padding(bottom = 50.dp)) {
-        ArticleTopAppBar(modifier = Modifier.background(ArticleTheme.colors.primary))
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(WindowInsets.navigationBars.asPaddingValues())
+            ) {
+                ArticleTopAppBar(modifier = Modifier.background(ArticleTheme.colors.primary))
 
-        HomeContent(
-            uiState = uiState,
-            animatedVisibilityScope = animatedVisibilityScope,
-            onNavigateToDetails = { viewModel.navigateToDetails(it) }
-        )
-    }
+                HomeContent(
+                    uiState = uiState,
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    onNavigateToDetails = { viewModel.navigateToDetails(it) }
+                )
+            }
 }
 
 @Composable
@@ -77,7 +82,7 @@ private fun SharedTransitionScope.HomeContent(
             }
             is HomeUiState.Success -> {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
+                    columns = rememberResponsiveGridCells(),
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(8.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
