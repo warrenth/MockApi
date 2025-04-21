@@ -1,4 +1,12 @@
-# Open Source DeepDive...
+## DeepDive 
+Multi-module, DesignSystem, Navigation, SharedTransition, 
+reference : cat-paywall-compose
+
+## 📷 Previews
+<p align="left">
+<img src="preview/preview01.gif" alt="drawing" width="270px" />
+</p>
+
 ## 1. core:navigation
 ## 1.1 멀티 모듈 Compose 에서 화면간 데이터 전달 방법. Navigation 사용법
 ### 1.1.1 객체를 Navigation에 직접 전달 (`NavType` 사용)
