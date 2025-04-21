@@ -42,6 +42,9 @@ landscapist = "2.4.6"
 appcompat = "1.7.0"
 material = "1.12.0"
 
+# 이미지
+glide = "4.16.0"
+
 # --------------------------
 
 [libraries]
@@ -78,12 +81,17 @@ androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
+androidx-palette = { group = "androidx.palette", name = "palette", version = "1.0.0" }
 
 # 🖼Landscapist (이미지 로딩)
 landscapist-glide = { group = "com.github.skydoves", name = "landscapist-glide", version.ref = "landscapist" }
 landscapist-animation = { group = "com.github.skydoves", name = "landscapist-animation", version.ref = "landscapist" }
 landscapist-placeholder = { group = "com.github.skydoves", name = "landscapist-placeholder", version.ref = "landscapist" }
 landscapist-palette = { group = "com.github.skydoves", name = "landscapist-palette", version.ref = "landscapist" }
+# Glide (이미지 로딩)
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+
 
 # 기타 라이브러리
 compose-stable-marker = { group = "com.github.skydoves", name = "compose-stable-marker", version.ref = "composeStableMarker" }

@@ -1,5 +1,5 @@
 ## DeepDive 
-Multi-module, DesignSystem, Navigation, SharedTransition, 
+Multi-module, DesignSystem, Navigation, SharedTransition     
 reference : cat-paywall-compose
 
 ## 📷 Previews

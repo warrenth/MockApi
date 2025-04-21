@@ -21,11 +21,12 @@ import androidx.compose.ui.unit.LayoutDirection
  * 기본 SharedTransition 설정을 적용한 Modifier 확장 함수.
  */
 context(SharedTransitionScope)
-fun Modifier.ArticlesSharedElement(
+fun Modifier.sharedElement(
     isLocalInspectionMode: Boolean,
-    state: SharedContentState,
+    state: SharedContentState,  // key
     animatedVisibilityScope: AnimatedVisibilityScope,
     boundsTransform: BoundsTransform = DefaultBoundsTransform,
+    // 전환 중에에 contentSize (기본값): 원래 콘텐츠 크기 그대로 사용
     placeHolderSize: PlaceHolderSize = PlaceHolderSize.contentSize,
     renderInOverlayDuringTransition: Boolean = true,
     zIndexInOverlay: Float = 0f,
@@ -50,14 +51,14 @@ fun Modifier.ArticlesSharedElement(
  * 더 간단하게 사용할 수 있도록 감싼 SharedTransition 헬퍼.
  */
 @Composable
-fun Modifier.sharedTransitionForArticle(
+fun Modifier.sharedTransition(
     scope: SharedTransitionScope,
-    articleKey: String,
+    key: String,
     animatedVisibilityScope: AnimatedVisibilityScope
 ): Modifier = with(scope) {
-    this@sharedTransitionForArticle.ArticlesSharedElement( // ✅ Modifier 확장 함수로 호출
+    this@sharedTransition.sharedElement(
         isLocalInspectionMode = LocalInspectionMode.current,
-        state = rememberSharedContentState("article-$articleKey"),
+        state = rememberSharedContentState("sharedTransition:$key"),
         animatedVisibilityScope = animatedVisibilityScope,
         boundsTransform = DefaultBoundsTransform,
     )

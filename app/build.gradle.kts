@@ -58,11 +58,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.iconsExtended)
 
-    // Compose Image Loading
-    implementation(libs.landscapist.glide)
-    implementation(libs.landscapist.animation)
-    implementation(libs.landscapist.placeholder)
-
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 

@@ -16,50 +16,31 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.kmpalette.palette.graphics.Palette
+import androidx.palette.graphics.Palette
 import com.kth.mockapi.core.designsystem.component.ArticleCircularProgress
 import com.kth.mockapi.core.designsystem.component.ArticleTopAppBar
-import com.kth.mockapi.core.designsystem.component.ArticlesSharedElement
-import com.kth.mockapi.core.designsystem.component.sharedTransitionForArticle
+import com.kth.mockapi.core.designsystem.component.sharedTransition
+import com.kth.mockapi.core.designsystem.image.GlidePaletteImage
 import com.kth.mockapi.core.designsystem.theme.ArticleTheme
+import com.kth.mockapi.core.designsystem.theme.rememberImagePalette
+import com.kth.mockapi.core.designsystem.theme.toSolidColorBrush
 import com.kth.mockapi.core.model.Article
 import com.kth.mockapi.core.model.MockUtils.mockArticle
-import com.kth.mockapi.core.navigation.boundsTransform
-import com.skydoves.compose.effects.RememberedEffect
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.components.rememberImageComponent
-import com.skydoves.landscapist.glide.GlideImage
-import com.skydoves.landscapist.palette.PalettePlugin
-import com.skydoves.landscapist.palette.rememberPaletteState
-import com.skydoves.landscapist.placeholder.shimmer.Shimmer
-import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 @Composable
 fun SharedTransitionScope.DetailScreen(
@@ -94,10 +75,8 @@ private fun SharedTransitionScope.ArticlesDetailContent(
     animatedVisibilityScope: AnimatedVisibilityScope,
     navigateUp: () -> Unit,
 ) {
-    var palette by rememberPaletteState()
-    val backgroundBrush by palette.paletteBackgroundBrush()
-
-    val context = LocalContext.current
+    var palette by rememberImagePalette()
+    val backgroundBrush = palette.toSolidColorBrush(alpha = 0.7f)
 
     DetailsAppBar(
         article = article,
@@ -143,37 +122,19 @@ private fun SharedTransitionScope.DetailsHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .sharedTransitionForArticle(
+            .sharedTransition(
                 scope = this@SharedTransitionScope,
-                articleKey = article.title,
+                key = article.title,
                 animatedVisibilityScope = animatedVisibilityScope
             )
     ) {
-        GlideImage(
+        GlidePaletteImage(
+            imageUrl = article.cover,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(460.dp),
-            imageModel = { article.cover },
-            imageOptions = ImageOptions(contentScale = ContentScale.FillBounds),
-            component = rememberImageComponent {
-                +ShimmerPlugin(
-                    Shimmer.Resonate(
-                        baseColor = Color.Transparent,
-                        highlightColor = Color.LightGray,
-                    ),
-                )
-
-                if (!LocalInspectionMode.current) {
-                    +PalettePlugin(
-                        imageModel = article.cover,
-                        useCache = true,
-                        paletteLoadedListener = { onPaletteLoaded.invoke(it) },
-                    )
-                }
-            },
-            previewPlaceholder = painterResource(
-                id = com.kth.mockapi.core.designsystem.R.drawable.placeholder,
-            ),
+            contentScale = ContentScale.FillBounds,
+            onPaletteLoaded = onPaletteLoaded
         )
     }
 }

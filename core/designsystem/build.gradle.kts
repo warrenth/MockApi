@@ -17,6 +17,10 @@ dependencies {
     api(libs.landscapist.placeholder)
     api(libs.landscapist.palette)
 
+    api(libs.glide)
+    api(libs.androidx.compose.foundation)
+    api(libs.androidx.palette)  //외부 까지
+
     // compose
     implementation(platform(libs.androidx.compose.bom))
     api(libs.androidx.compose.runtime)
