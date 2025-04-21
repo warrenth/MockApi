@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.sp
 import com.kth.mockapi.core.designsystem.R
 import com.kth.mockapi.core.designsystem.theme.ArticleTheme
 
+//코틀린 1.4 부터 trailingComma
+// 외부 : 색상, 아이콘, 텍스트
 @Composable
 fun ArticleTopAppBar(
     modifier: Modifier = Modifier,

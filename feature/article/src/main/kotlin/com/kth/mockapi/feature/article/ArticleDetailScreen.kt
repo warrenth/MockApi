@@ -154,7 +154,7 @@ private fun SharedTransitionScope.DetailsHeader(
                 .fillMaxWidth()
                 .height(460.dp),
             imageModel = { article.cover },
-            imageOptions = ImageOptions(contentScale = ContentScale.Crop),
+            imageOptions = ImageOptions(contentScale = ContentScale.FillBounds),
             component = rememberImageComponent {
                 +ShimmerPlugin(
                     Shimmer.Resonate(
@@ -185,21 +185,21 @@ private fun DetailsContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 16.dp)
+            .padding(horizontal = 8.dp, vertical = 16.dp)
     ) {
         Text(
             text = article.description,
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray,
+            color = ArticleTheme.colors.black,
+            fontSize = 26.sp,
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Text(
-            text = article.content,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-            lineHeight = 22.sp,
+            text = article.content + article.content + article.content,
+            color = ArticleTheme.colors.black,
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp,
         )
     }
 }

@@ -9,9 +9,12 @@ import com.kth.mockapi.core.navigation.MockApiScreen
 
 @Composable
 fun MockApiNavHost(navHostController: NavHostController) {
-    // Motion, Animation 의 context 를 제공
+    /**
+     * 전체 composable 에 SharedTransition scope 을 제공
+     * scope 만 제공한 것이지 직접 사용한 composable 만 적용 됨
+     */
     SharedTransitionLayout {
-        NavHost(    //Navigation의 시작점, Composable route 를 연결
+        NavHost(
             navController = navHostController,
             startDestination = MockApiScreen.Home,
         ) {
