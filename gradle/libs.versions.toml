@@ -1,6 +1,6 @@
 [versions]
 # Android Gradle Plugin & Kotlin
-agp = "8.7.2"                # Android Gradle Plugin (Gradle과 Android Studio에 맞춰야 함)
+agp = "8.6.1"          # Android Gradle Plugin (Gradle과 Android Studio에 맞춰야 함)
 kotlin = "2.1.10"            # Kotlin 버전
 ksp = "2.1.10-1.0.31"        # Kotlin Symbol Processing (annotation processor 대체)
 
@@ -28,6 +28,7 @@ espressoCoreVersion = "3.6.1"
 uiautomator = "2.3.0"
 benchmarkMacroJunit4Version = "1.3.4"
 junit = "4.13.2"
+screenshot = "0.0.1-alpha08"
 
 # 외부 라이브러리 (의존성, 네트워크, 스타일 등)
 kotlinxCoroutines = "1.10.1"
@@ -45,6 +46,7 @@ material = "1.12.0"
 
 # 이미지
 glide = "4.16.0"
+uiTooling = "1.8.0"
 
 # --------------------------
 
@@ -63,6 +65,7 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTest" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCoreVersion" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }
 androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 androidx-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4Version" }
 
@@ -117,7 +120,6 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 compose-compiler-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 spotless-gradlePlugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
 
-
 # --------------------------
 
 [plugins]
@@ -137,3 +139,5 @@ google-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradl
 
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprofile" }
+
+screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
