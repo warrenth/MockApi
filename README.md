@@ -281,6 +281,10 @@ SharedTransitionLayout
 
 ### 4.1.2 전역 스코프 CompositionLocalProvider
 
+> core:navigation 에 LocalSharedTransitionScope 를 정의하고 feature가 사용.
+> feature 모듈 간 SharedTransitionScope, AnimatedVisibilityScope 인자를 받지 않아
+> 불필요한 의존성을 줄인다. (관심사 분리)
+
 ```kotlin
 SharedTransitionLayout
 └── CompositionLocalProvider(LocalSharedTransitionScope)
@@ -292,3 +296,29 @@ SharedTransitionLayout
 └── CompositionLocalProvider(LocalAnimatedVisibilityScope)
 └── DetailScreen()
 ```
+
+# Spotless
+
+> SpotLess 코드 포멧터 도구
+> Kotlin 등 다양한 언어에서 자동으로 코딩 스타일을 통일한다.
+
+```kotlin
+class SpotlessConventionPlugin : Plugin<Project> {
+    override fun apply(target: Project) {
+        ...
+    }
+}
+```
+
+Spotless 설정을 공통화해서 Convention Plugin 으로 정의 모든 모듈에 중복을 적는 대신 plugin 하나만 apply 하면 된다.
+
+> 전체 검사 & 수정
+> ./gradlew spotlessCheck
+> ./gradlew spotlessApply
+
+> 모듈 단위 검사 & 수정
+> ./gradlew :feature:home:spotlessCheck
+> ./gradlew :feature:home:spotlessApply
+
+> 개별로 수시 포멧 자동 적용 or Action Save As 활용
+> CI 에서는 spotlessCheck 적용

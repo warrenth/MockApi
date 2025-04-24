@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2025 MockApi, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.kth.mockapi.core.navigation
 
 import androidx.navigation.NavController
@@ -39,16 +54,16 @@ abstract class Navigator {
  * 예: navigate(RouteScreen.Detail(article))
  */
 abstract class AppComposeNavigator<T : Any> : Navigator() {
-    //라우트로 이동할 때 사용 (예: navigate(Home))
+    // 라우트로 이동할 때 사용 (예: navigate(Home))
     abstract fun navigate(route: T, optionsBuilder: (NavOptionsBuilder.() -> Unit)? = null)
 
-    //이전 화면으로 이동하면서 값(result)을 전달 (예: "화면에서 선택된 항목 전달")
+    // 이전 화면으로 이동하면서 값(result)을 전달 (예: "화면에서 선택된 항목 전달")
     abstract fun <R> navigateBackWithResult(key: String, result: R, route: T?)
 
-    //특정 라우트까지 백스택을 제거하고 이동
+    // 특정 라우트까지 백스택을 제거하고 이동
     abstract fun popUpTo(route: T, inclusive: Boolean)
 
-    //전체 백스택을 비우고 새 화면으로 이동
+    // 전체 백스택을 비우고 새 화면으로 이동
     abstract fun navigateAndClearBackStack(route: T)
 
     suspend fun handleNavigationCommands(navController: NavController) {
@@ -67,7 +82,7 @@ abstract class AppComposeNavigator<T : Any> : Navigator() {
                 navigate(navigationCommand.route, navigationCommand.options)
             }
 
-            NavigationCommand.NavigateUp -> navigateUp()  //뒤로가기
+            NavigationCommand.NavigateUp -> navigateUp() // 뒤로가기
             /**
              * 지정한 route까지 back stack을 pop(제거) 하는 함수
              * [Home] → [List] → [Detail] → [Settings]

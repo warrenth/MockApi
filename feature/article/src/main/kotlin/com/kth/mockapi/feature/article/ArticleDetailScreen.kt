@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2025 MockApi, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.kth.mockapi.feature.article
 
 import androidx.compose.animation.AnimatedVisibility
@@ -125,8 +140,8 @@ private fun SharedTransitionScope.DetailsHeader(
             .sharedTransition(
                 scope = this@SharedTransitionScope,
                 key = article.title,
-                animatedVisibilityScope = animatedVisibilityScope
-            )
+                animatedVisibilityScope = animatedVisibilityScope,
+            ),
     ) {
         GlidePaletteImage(
             imageUrl = article.cover,
@@ -134,7 +149,7 @@ private fun SharedTransitionScope.DetailsHeader(
                 .fillMaxWidth()
                 .height(460.dp),
             contentScale = ContentScale.FillBounds,
-            onPaletteLoaded = onPaletteLoaded
+            onPaletteLoaded = onPaletteLoaded,
         )
     }
 }
@@ -146,7 +161,7 @@ private fun DetailsContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 16.dp)
+            .padding(horizontal = 8.dp, vertical = 16.dp),
     ) {
         Text(
             text = article.description,
