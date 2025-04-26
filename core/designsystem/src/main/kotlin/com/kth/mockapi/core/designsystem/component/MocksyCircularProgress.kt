@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import com.kth.mockapi.core.designsystem.theme.ArticleTheme
 
 @Composable
-fun BoxScope.ArticleCircularProgress() {
+fun BoxScope.MocksyCircularProgress() {
     CircularProgressIndicator(
         modifier = Modifier.align(Alignment.Center),
         color = ArticleTheme.colors.primary

@@ -25,6 +25,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,11 +52,12 @@ fun SharedTransitionScope.ArticleCardItem(
     article: Article,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onNavigateToDetails: (Article) -> Unit,
+    onLikeClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
+            .height(250.dp)
             .clickable { onNavigateToDetails.invoke(article) }
             .sharedTransition(
                 scope = this@SharedTransitionScope,
@@ -63,23 +68,45 @@ fun SharedTransitionScope.ArticleCardItem(
         GlideImage(
             modifier = Modifier.fillMaxSize(),
             imageModel = { article.cover },
-            imageOptions = ImageOptions(contentScale = ContentScale.Crop),
+            imageOptions = ImageOptions(contentScale = ContentScale.FillBounds),
         )
 
-        Text(
+        // 텍스트 배경
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .background(Color.Black.copy(alpha = 0.45f))
                 .padding(12.dp),
-            text = article.title,
-            color = Color.White,
-            textAlign = TextAlign.Center,
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Thin,
+        ) {
+            Text(
+                text = article.title,
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Thin,
+                modifier = Modifier.align(Alignment.Center),
+            )
+        }
+
+        // 좋아요 버튼
+        Icon(
+            imageVector = Icons.Default.FavoriteBorder, // 빈 하트 아이콘
+            contentDescription = "Like",
+            tint = Color.White,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(3.dp)
+                .background(
+                    Color.Black.copy(alpha = 0.4f),
+                    shape = CircleShape,
+                )
+                .padding(8.dp)
+                .clickable { onLikeClick() },
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -91,6 +118,7 @@ private fun ArticleCardPreview() {
                     article = mockArticle,
                     animatedVisibilityScope = this,
                     onNavigateToDetails = {},
+                    onLikeClick = {},
                 )
             }
         }

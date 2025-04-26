@@ -1,6 +1,7 @@
 package com.kth.mockapi.core.designsystem.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -17,10 +18,11 @@ import com.kth.mockapi.core.designsystem.theme.ArticleTheme
 //코틀린 1.4 부터 trailingComma
 // 외부 : 색상, 아이콘, 텍스트
 @Composable
-fun ArticleTopAppBar(
+fun MocksyTopAppBar(
     modifier: Modifier = Modifier,
     title: String = stringResource(id = R.string.app_name),
     navigationIcon: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
         modifier = modifier,
@@ -33,6 +35,7 @@ fun ArticleTopAppBar(
             )
         },
         navigationIcon = navigationIcon,
+        actions = actions,
         colors = TopAppBarDefaults.topAppBarColors().copy(
             containerColor = Color.Transparent
         ),
@@ -43,6 +46,6 @@ fun ArticleTopAppBar(
 @Composable
 private fun CatArticlesAppBarPreview() {
     ArticleTheme {
-        ArticleTopAppBar(modifier = Modifier.background(ArticleTheme.colors.primary))
+        MocksyTopAppBar(modifier = Modifier.background(ArticleTheme.colors.primary))
     }
 }

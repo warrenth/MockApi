@@ -38,6 +38,7 @@ class ArticleCardItemScreenshotTest {
                         article = mockArticle,
                         animatedVisibilityScope = this,
                         onNavigateToDetails = {},
+                        onLikeClick = {},
                     )
                 }
             }

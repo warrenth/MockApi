@@ -37,8 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.kth.mockapi.core.designsystem.component.ArticleCircularProgress
-import com.kth.mockapi.core.designsystem.component.ArticleTopAppBar
+import com.kth.mockapi.core.designsystem.component.MocksyCircularProgress
+import com.kth.mockapi.core.designsystem.component.MocksyTopAppBar
 import com.kth.mockapi.core.designsystem.theme.ArticleTheme
 import com.kth.mockapi.core.designsystem.util.rememberResponsiveGridCells
 import com.kth.mockapi.core.model.Article
@@ -55,12 +55,13 @@ fun SharedTransitionScope.HomeScreen(
             .fillMaxSize()
             .padding(WindowInsets.navigationBars.asPaddingValues()),
     ) {
-        ArticleTopAppBar(modifier = Modifier.background(ArticleTheme.colors.primary))
+        MocksyTopAppBar(modifier = Modifier.background(ArticleTheme.colors.primary))
 
         HomeContent(
             uiState = uiState,
             animatedVisibilityScope = animatedVisibilityScope,
             onNavigateToDetails = { viewModel.navigateToDetails(it) },
+            onLikeClick = { viewModel.toggleLike() }
         )
     }
 }
@@ -70,20 +71,21 @@ private fun SharedTransitionScope.HomeContent(
     uiState: HomeUiState,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onNavigateToDetails: (Article) -> Unit,
+    onLikeClick: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (uiState) {
             is HomeUiState.Loading -> {
-                ArticleCircularProgress()
+                MocksyCircularProgress()
             }
 
             is HomeUiState.Success -> {
                 LazyVerticalGrid(
                     columns = rememberResponsiveGridCells(),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    contentPadding = PaddingValues(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(3.dp),
+                    horizontalArrangement = Arrangement.spacedBy(3.dp),
                 ) {
                     items(
                         items = uiState.articles,
@@ -93,6 +95,7 @@ private fun SharedTransitionScope.HomeContent(
                             article = article,
                             animatedVisibilityScope = animatedVisibilityScope,
                             onNavigateToDetails = onNavigateToDetails,
+                            onLikeClick = onLikeClick
                         )
                     }
                 }

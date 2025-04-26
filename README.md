@@ -1,13 +1,14 @@
 ## DeepDive
 
-Multi-module, DesignSystem, Navigation, SharedTransition     
-reference : cat-paywall-compose
+Multi-module, DesignSystem
+Navigation, SharedTransition
+SpotLess, ScreenShotTest, UnitTest,
 
 ## 📷 Previews
 
 <p align="left">
 <img src="preview/preview01.gif" alt="drawing" width="270px" />
-</p>
+</p>s
 
 ## 1. core:navigation
 

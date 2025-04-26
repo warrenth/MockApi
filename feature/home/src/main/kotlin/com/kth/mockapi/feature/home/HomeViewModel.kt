@@ -51,6 +51,10 @@ class HomeViewModel @Inject constructor(
     fun navigateToDetails(article: Article) {
         navigator.navigate(MockApiScreen.Detail(article))
     }
+
+    fun toggleLike() {
+        
+    }
 }
 
 @Stable

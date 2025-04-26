@@ -31,11 +31,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -47,8 +49,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.palette.graphics.Palette
-import com.kth.mockapi.core.designsystem.component.ArticleCircularProgress
-import com.kth.mockapi.core.designsystem.component.ArticleTopAppBar
+import com.kth.mockapi.core.designsystem.component.MocksyCircularProgress
+import com.kth.mockapi.core.designsystem.component.MocksyTopAppBar
 import com.kth.mockapi.core.designsystem.component.sharedTransition
 import com.kth.mockapi.core.designsystem.image.GlidePaletteImage
 import com.kth.mockapi.core.designsystem.theme.ArticleTheme
@@ -72,7 +74,7 @@ fun SharedTransitionScope.DetailScreen(
     ) {
         if (article == null) {
             Box(modifier = Modifier.fillMaxSize()) {
-                ArticleCircularProgress()
+                MocksyCircularProgress()
             }
         } else {
             ArticlesDetailContent(
@@ -93,7 +95,7 @@ private fun SharedTransitionScope.ArticlesDetailContent(
     var palette by rememberImagePalette()
     val backgroundBrush = palette.toSolidColorBrush(alpha = 0.7f)
 
-    DetailsAppBar(
+    DetailsTopAppBar(
         article = article,
         navigateUp = navigateUp,
         backgroundBrush = backgroundBrush,
@@ -109,12 +111,12 @@ private fun SharedTransitionScope.ArticlesDetailContent(
 }
 
 @Composable
-private fun DetailsAppBar(
+private fun DetailsTopAppBar(
     article: Article,
     backgroundBrush: Brush,
     navigateUp: () -> Unit,
 ) {
-    ArticleTopAppBar(
+    MocksyTopAppBar(
         modifier = Modifier.background(backgroundBrush),
         title = article.title,
         navigationIcon = {
@@ -125,6 +127,17 @@ private fun DetailsAppBar(
                 contentDescription = null,
             )
         },
+        actions = {
+            Icon(
+                imageVector = Icons.Filled.FavoriteBorder,
+                contentDescription = "Like",
+                tint = Color.White,
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterVertically)
+                    .padding(12.dp)
+                    .clickable(onClick = {}),
+            )
+        }
     )
 }
 
