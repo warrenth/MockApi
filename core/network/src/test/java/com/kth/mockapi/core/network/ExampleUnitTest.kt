@@ -1,4 +1,4 @@
-package com.kth.mockapi.core.network
+package com.kth.mocksy.core.network
 
 import org.junit.Test
 

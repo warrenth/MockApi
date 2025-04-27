@@ -1,13 +1,13 @@
 plugins {
-    id("mockapi.android.library")
-    id("mockapi.android.library.compose")
-    id("mockapi.android.hilt")
+    id("mocksy.android.library")
+    id("mocksy.android.library.compose")
+    id("mocksy.android.hilt")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("mockapi.spotless")
+    id("mocksy.spotless")
 }
 
 android {
-    namespace = "com.kth.mockapi.core.navigation"
+    namespace = "com.kth.mocksy.core.navigation"
 }
 
 dependencies {

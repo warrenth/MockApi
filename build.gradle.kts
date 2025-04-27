@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.spotless) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
 }
 
 apply {

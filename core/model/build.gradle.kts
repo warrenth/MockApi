@@ -1,14 +1,14 @@
 plugins {
-    id("mockapi.android.library")
+    id("mocksy.android.library")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
-    id("mockapi.spotless")
+    id("mocksy.spotless")
 }
 
 android {
-    namespace = "com.kth.mockapi.core.model"
+    namespace = "com.kth.mocksy.core.model"
 }
 
 dependencies {

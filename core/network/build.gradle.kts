@@ -1,12 +1,12 @@
 plugins {
-    id("mockapi.android.library")
-    id("mockapi.android.hilt")
+    id("mocksy.android.library")
+    id("mocksy.android.hilt")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("mockapi.spotless")
+    id("mocksy.spotless")
 }
 
 android {
-    namespace = "com.kth.mockapi.core.network"
+    namespace = "com.kth.mocksy.core.network"
 }
 
 dependencies {

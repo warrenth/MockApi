@@ -1,4 +1,4 @@
-package com.kth.mockapi.core.designsystem
+package com.kth.mocksy.core.designsystem
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.kth.mockapi.core.designsystem.test", appContext.packageName)
+        assertEquals("com.kth.mocksy.core.designsystem.test", appContext.packageName)
     }
 }

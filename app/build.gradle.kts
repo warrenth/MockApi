@@ -1,8 +1,8 @@
 plugins {
-    id("mockapi.android.application")
-    id("mockapi.android.application.compose")
-    id("mockapi.android.hilt")
-    id("mockapi.spotless")
+    id("mocksy.android.application")
+    id("mocksy.android.application.compose")
+    id("mocksy.android.hilt")
+    id("mocksy.spotless")
     id("kotlin-parcelize")
     alias(libs.plugins.google.secrets)
     alias(libs.plugins.android.application)
@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.kth.mockapi"
+    namespace = "com.kth.mocksy"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.kth.mockapi"
+        applicationId = "com.kth.mocksy"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

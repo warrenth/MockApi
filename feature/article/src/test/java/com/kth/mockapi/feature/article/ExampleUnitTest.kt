@@ -1,4 +1,4 @@
-package com.kth.mockapi.feature.article
+package com.kth.mocksy.feature.article
 
 import org.junit.Test
 

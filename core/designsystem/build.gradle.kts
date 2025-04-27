@@ -1,11 +1,11 @@
 plugins {
-    id("mockapi.android.library")
-    id("mockapi.android.library.compose")
-    id("mockapi.spotless")
+    id("mocksy.android.library")
+    id("mocksy.android.library.compose")
+    id("mocksy.spotless")
 }
 
 android {
-    namespace = "com.kth.mockapi.core.designsystem"
+    namespace = "com.kth.mocksy.core.designsystem"
 }
 
 dependencies {

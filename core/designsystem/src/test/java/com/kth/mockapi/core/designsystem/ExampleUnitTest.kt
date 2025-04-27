@@ -1,4 +1,4 @@
-package com.kth.mockapi.core.designsystem
+package com.kth.mocksy.core.designsystem
 
 import org.junit.Test
 

@@ -1,13 +1,13 @@
 plugins {
-    id("mockapi.android.library")
-    id("mockapi.android.library.compose")
-    id("mockapi.android.feature")
-    id("mockapi.android.hilt")
-    id("mockapi.spotless")
+    id("mocksy.android.library")
+    id("mocksy.android.library.compose")
+    id("mocksy.android.feature")
+    id("mocksy.android.hilt")
+    id("mocksy.spotless")
 }
 
 android {
-    namespace = "com.kth.mockapi.feature.article"
+    namespace = "com.kth.mocksy.feature.article"
 }
 
 dependencies {
