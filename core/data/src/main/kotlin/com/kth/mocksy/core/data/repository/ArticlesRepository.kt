@@ -16,9 +16,12 @@
 package com.kth.mocksy.core.data.repository
 
 import com.kth.mocksy.core.model.Article
-import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.flow.Flow
 
-interface ArticlesRepository {
-    fun fetchArticles(): Flow<ApiResponse<List<Article>>>
+interface ArticleRepository {
+    fun getArticles(): Flow<List<Article>>
+
+    fun getLikedArticleIds(): Flow<Set<String>>
+
+    suspend fun likeArticle(articleId: String, liked: Boolean)
 }

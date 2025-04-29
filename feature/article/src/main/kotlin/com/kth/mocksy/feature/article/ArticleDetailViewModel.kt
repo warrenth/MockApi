@@ -17,7 +17,6 @@ package com.kth.mocksy.feature.article
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.kth.mocksy.core.data.repository.ArticlesRepository
 import com.kth.mocksy.core.model.Article
 import com.kth.mocksy.core.navigation.AppComposeNavigator
 import com.kth.mocksy.core.navigation.MocksyScreen
@@ -26,7 +25,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArticleDetailViewModel @Inject constructor(
-    repository: ArticlesRepository,
     private val navigator: AppComposeNavigator<MocksyScreen>,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {

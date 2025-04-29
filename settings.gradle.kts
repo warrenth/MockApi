@@ -23,9 +23,9 @@ dependencyResolutionManagement {
 rootProject.name = "mockapi"
 include(":app")
 include(":core:model")
-include(":core:network")
 include(":core:designsystem")
 include(":core:navigation")
 include(":core:data")
 include(":feature:home")
 include(":feature:article")
+include(":core:domain")

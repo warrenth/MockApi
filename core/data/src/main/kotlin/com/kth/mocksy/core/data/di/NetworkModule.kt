@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kth.mocksy.core.network.di
+package com.kth.mocksy.core.data.di
 
-import com.kth.mocksy.core.network.service.ArticlesService
-import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
+import com.kth.mocksy.core.data.api.MocksyService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -34,25 +34,35 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesNetworkJson(): Json = Json {
-        ignoreUnknownKeys = true
+    fun provideOkhttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+
+    @Provides
+    @Singleton
+    fun provideConverterFactory(
+        json: Json,
+    ): Converter.Factory {
+        return json.asConverterFactory("application/json".toMediaType())
     }
 
     @Provides
     @Singleton
-    fun provideArticlesRetrofit(networkJson: Json): Retrofit {
+    fun provideArticlesApi(
+        okHttpClient: OkHttpClient,
+        converterFactory: Converter.Factory,
+    ): MocksyService {
         return Retrofit.Builder()
             .baseUrl(
                 "https://67fc66eb1f8b41c8168661ea.mockapi.io/",
             )
-            .addConverterFactory(networkJson.asConverterFactory("application/json".toMediaType()))
-            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
-            .build()
+            .addConverterFactory(converterFactory)
+            .client(okHttpClient).build()
+            .create(MocksyService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideArticleService(
-        retrofit: Retrofit,
-    ): ArticlesService = retrofit.create()
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+    }
 }

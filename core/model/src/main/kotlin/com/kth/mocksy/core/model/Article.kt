@@ -26,10 +26,12 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 data class Article(
+    val id: String,
     val title: String,
     val content: String,
     val description: String,
     val author: String,
     val date: String,
     val cover: String,
+    val liked: Boolean,
 ) : Parcelable

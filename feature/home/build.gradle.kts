@@ -21,5 +21,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
 
+    implementation(libs.kotlinx.immutable)
+
     screenshotTestImplementation(libs.androidx.ui.tooling)
 }

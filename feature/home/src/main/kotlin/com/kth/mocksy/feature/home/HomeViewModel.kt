@@ -15,45 +15,79 @@
  */
 package com.kth.mocksy.feature.home
 
+import android.util.Log
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kth.mocksy.core.data.repository.ArticlesRepository
+import com.kth.mocksy.core.domain.GetArticlesUseCase
+import com.kth.mocksy.core.domain.GetLikedArticleIdsUseCase
+import com.kth.mocksy.core.domain.LikeArticleUseCase
 import com.kth.mocksy.core.model.Article
 import com.kth.mocksy.core.navigation.AppComposeNavigator
 import com.kth.mocksy.core.navigation.MocksyScreen
-import com.skydoves.sandwich.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    repository: ArticlesRepository,
+    getArticlesUseCase: GetArticlesUseCase,
+    getLikedArticleIdsUseCase: GetLikedArticleIdsUseCase,
+    private val likeArticleUseCase: LikeArticleUseCase,
     private val navigator: AppComposeNavigator<MocksyScreen>,
 ) : ViewModel() {
 
-    val uiState: StateFlow<HomeUiState> = repository.fetchArticles()
-        .mapLatest { response ->
-            response.fold(
-                onSuccess = { HomeUiState.Success(it) },
-                onFailure = { HomeUiState.Error(it) },
+
+    private val _errorFlow = MutableSharedFlow<Throwable>()
+    val errorFlow = _errorFlow.asSharedFlow()
+
+    private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
+    val uiState = _uiState.asStateFlow()
+
+    init {
+        combine(
+            getArticlesUseCase(),
+            getLikedArticleIdsUseCase(),
+        ) { articles, likedIds ->
+            Log.d("TriggerIds", "combine call - likedIds: $likedIds, articles: $articles ")
+            HomeUiState.Success(
+                articles = articles
+                    .map { article ->
+                        article.copy(liked = likedIds.contains(article.id))
+                    }
+                    .toPersistentList()
             )
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = HomeUiState.Loading,
-        )
+        }
+            .catch { throwable ->
+                Log.d("TriggerIds", "combine catch $throwable")
+                _errorFlow.emit(throwable)
+            }
+            .onEach { combinedUiState ->
+                _uiState.value = combinedUiState
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun navigateToDetails(article: Article) {
         navigator.navigate(MocksyScreen.Detail(article))
     }
 
-    fun toggleLike() {
-        
+    fun toggleLike(article: Article) {
+        viewModelScope.launch {
+            val reversedLike = !article.liked
+            Log.d("TriggerIds", "toggleLike call - reversedLike: $reversedLike")
+            likeArticleUseCase(article.id, reversedLike)
+        }
     }
 }
 

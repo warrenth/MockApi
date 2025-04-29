@@ -52,7 +52,7 @@ fun SharedTransitionScope.ArticleCardItem(
     article: Article,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onNavigateToDetails: (Article) -> Unit,
-    onLikeClick: () -> Unit,
+    onLikeClick: (Article) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -93,7 +93,7 @@ fun SharedTransitionScope.ArticleCardItem(
         Icon(
             imageVector = Icons.Default.FavoriteBorder, // 빈 하트 아이콘
             contentDescription = "Like",
-            tint = Color.White,
+            tint = if (article.liked) Color.Red else Color.White,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(3.dp)
@@ -102,7 +102,7 @@ fun SharedTransitionScope.ArticleCardItem(
                     shape = CircleShape,
                 )
                 .padding(8.dp)
-                .clickable { onLikeClick() },
+                .clickable { onLikeClick.invoke(article) },
         )
     }
 }

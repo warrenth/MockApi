@@ -33,6 +33,8 @@ screenshot = "0.0.1-alpha08"
 # 외부 라이브러리 (의존성, 네트워크, 스타일 등)
 kotlinxCoroutines = "1.10.1"
 kotlinxSerializationJson = "1.8.0"
+kotlinxDatetime = "0.6.1"
+kotlinxImmutable = "0.3.8"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 sandwich = "2.1.1"
@@ -107,10 +109,14 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", v
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxImmutable" }
+
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 sandwich = { group = "com.github.skydoves", name = "sandwich-retrofit", version.ref = "sandwich" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
+inject = "javax.inject:javax.inject:1"
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }

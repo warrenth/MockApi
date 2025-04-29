@@ -13,14 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kth.mocksy.core.network.service
+package com.kth.mocksy.core.data.di
 
-import com.kth.mocksy.core.model.Article
-import com.skydoves.sandwich.ApiResponse
-import retrofit2.http.GET
+import com.kth.mocksy.core.data.api.ArticlesDispatcher
+import com.kth.mocksy.core.data.api.Dispatcher
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
-interface ArticlesService {
+@Module
+@InstallIn(SingletonComponent::class)
+internal object DispatchersModule {
 
-    @GET("articles")
-    suspend fun fetchArticles(): ApiResponse<List<Article>>
+    @Provides
+    @Dispatcher(ArticlesDispatcher.IO)
+    fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

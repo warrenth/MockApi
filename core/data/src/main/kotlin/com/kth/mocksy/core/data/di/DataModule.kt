@@ -15,8 +15,8 @@
  */
 package com.kth.mocksy.core.data.di
 
-import com.kth.mocksy.core.data.repository.ArticlesRepository
-import com.kth.mocksy.core.data.repository.ArticlesRepositoryImpl
+import com.kth.mocksy.core.data.repository.ArticleRepository
+import com.kth.mocksy.core.data.repository.DefaultArticlesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,5 +27,5 @@ import dagger.hilt.components.SingletonComponent
 internal interface DataModule {
 
     @Binds
-    fun bindsArticlesRepository(articlesRepositoryImpl: ArticlesRepositoryImpl): ArticlesRepository
+    fun bindsArticlesRepository(articlesRepositoryImpl: DefaultArticlesRepository): ArticleRepository
 }

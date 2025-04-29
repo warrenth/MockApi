@@ -13,22 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kth.mocksy.core.network.di
+package com.kth.mocksy.core.data.api
 
-import com.kth.mocksy.core.network.ArticlesDispatcher
-import com.kth.mocksy.core.network.Dispatcher
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.kth.mocksy.core.data.model.ArticleResponse
+import retrofit2.http.GET
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal object DispatchersModule {
+interface MocksyService {
 
-    @Provides
-    @Dispatcher(ArticlesDispatcher.IO)
-    fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
+    @GET("articles")
+    suspend fun fetchArticles(): List<ArticleResponse>
 }

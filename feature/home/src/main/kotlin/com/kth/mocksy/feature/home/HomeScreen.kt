@@ -61,7 +61,7 @@ fun SharedTransitionScope.HomeScreen(
             uiState = uiState,
             animatedVisibilityScope = animatedVisibilityScope,
             onNavigateToDetails = { viewModel.navigateToDetails(it) },
-            onLikeClick = { viewModel.toggleLike() }
+            onLikeClick = { viewModel.toggleLike(it) }
         )
     }
 }
@@ -71,7 +71,7 @@ private fun SharedTransitionScope.HomeContent(
     uiState: HomeUiState,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onNavigateToDetails: (Article) -> Unit,
-    onLikeClick: () -> Unit,
+    onLikeClick: (Article) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (uiState) {
