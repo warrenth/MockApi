@@ -37,18 +37,22 @@ internal class DefaultArticlesRepository @Inject constructor(
     private val likedIds: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet())
 
     override fun getArticles(): Flow<List<Article>> = flow {
-        Log.d("TriggerIds", "getArticles() call - likedIds: $likedIds")
         emit(mocksyService.fetchArticles().map { it.toData() })
     }
 
     override fun getLikedArticleIds(): Flow<Set<String>> {
-        Log.d("TriggerIds", "getLikedArticleIds() call - likedIds: $likedIds")
         return likedIds.filterNotNull()
     }
 
     override suspend fun likeArticle(articleId: String, liked: Boolean) {
         Log.d("TriggerIds", "likeArticle() before call - likedIds: ${likedIds.value}")
-        likedIds.update { ids -> ids + articleId }
+        likedIds.update { currentIds ->
+            if (liked) {
+                currentIds + articleId // 좋아요 추가
+            } else {
+                currentIds - articleId // 좋아요 삭제
+            }
+        }
         Log.d("TriggerIds", "likeArticle() after call - likedIds: ${likedIds.value}")
     }
 }

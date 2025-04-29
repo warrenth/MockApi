@@ -65,6 +65,7 @@ fun SharedTransitionScope.DetailScreen(
     viewModel: ArticleDetailViewModel = hiltViewModel(),
 ) {
     val article by viewModel.article.collectAsStateWithLifecycle()
+    val isLiked by viewModel.isLiked.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -81,6 +82,8 @@ fun SharedTransitionScope.DetailScreen(
                 article = article!!,
                 animatedVisibilityScope = animatedVisibilityScope,
                 navigateUp = { viewModel.navigateUp() },
+                onLikeClick = { viewModel.toggleLike() },
+                isLiked = isLiked
             )
         }
     }
@@ -91,6 +94,8 @@ private fun SharedTransitionScope.ArticlesDetailContent(
     article: Article,
     animatedVisibilityScope: AnimatedVisibilityScope,
     navigateUp: () -> Unit,
+    onLikeClick: () -> Unit,
+    isLiked: Boolean,
 ) {
     var palette by rememberImagePalette()
     val backgroundBrush = palette.toSolidColorBrush(alpha = 0.7f)
@@ -99,6 +104,8 @@ private fun SharedTransitionScope.ArticlesDetailContent(
         article = article,
         navigateUp = navigateUp,
         backgroundBrush = backgroundBrush,
+        onLikeClick = onLikeClick,
+        isLiked = isLiked
     )
 
     DetailsHeader(
@@ -115,6 +122,8 @@ private fun DetailsTopAppBar(
     article: Article,
     backgroundBrush: Brush,
     navigateUp: () -> Unit,
+    onLikeClick: () -> Unit,
+    isLiked: Boolean,
 ) {
     MocksyTopAppBar(
         modifier = Modifier.background(backgroundBrush),
@@ -131,11 +140,11 @@ private fun DetailsTopAppBar(
             Icon(
                 imageVector = Icons.Filled.FavoriteBorder,
                 contentDescription = "Like",
-                tint = Color.White,
+                tint = if(isLiked) Color.Red else Color.White,
                 modifier = Modifier
                     .align(alignment = Alignment.CenterVertically)
                     .padding(12.dp)
-                    .clickable(onClick = {}),
+                    .clickable(onClick = { onLikeClick() }),
             )
         }
     )
@@ -204,6 +213,8 @@ private fun CatArticlesDetailContentPreview() {
                         article = mockArticle,
                         animatedVisibilityScope = this@AnimatedVisibility,
                         navigateUp = {},
+                        onLikeClick = {},
+                        isLiked = false
                     )
                 }
             }
