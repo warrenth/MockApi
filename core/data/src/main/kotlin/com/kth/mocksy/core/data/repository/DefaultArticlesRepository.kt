@@ -21,20 +21,23 @@ import com.kth.mocksy.core.model.Article
 import com.kth.mocksy.core.data.api.ArticlesDispatcher
 import com.kth.mocksy.core.data.api.Dispatcher
 import com.kth.mocksy.core.data.api.MocksyService
+import com.kth.mocksy.core.datastore.datastore.LikePreferencesDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 internal class DefaultArticlesRepository @Inject constructor(
     private val mocksyService: MocksyService,
-    @Dispatcher(ArticlesDispatcher.IO) private val ioDispatcher: CoroutineDispatcher,
+    private val likedDataStore: LikePreferencesDataStore,
 ) : ArticleRepository {
 
-    private val likedIds: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet())
+    private val likedIdsForFlow: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet()) //test
+    private val likedIds: Flow<Set<String>> = likedDataStore.likedArticle
 
     override fun getArticles(): Flow<List<Article>> = flow {
         emit(mocksyService.fetchArticles().map { it.toData() })
@@ -45,14 +48,25 @@ internal class DefaultArticlesRepository @Inject constructor(
     }
 
     override suspend fun likeArticle(articleId: String, liked: Boolean) {
-        Log.d("TriggerIds", "likeArticle() before call - likedIds: ${likedIds.value}")
-        likedIds.update { currentIds ->
+        val currentLikedArticleIds = likedIds.first()
+        Log.d("TriggerIds", "likeArticle() before call - likedIds: $currentLikedArticleIds")
+        likedDataStore.updateLikedArticle(
+            buildSet {
+                addAll(currentLikedArticleIds)
+                if(liked) add(articleId) else remove(articleId)
+            }
+        )
+        Log.d("TriggerIds", "likeArticle() after call - likedIds: $currentLikedArticleIds")
+    }
+
+    fun likeArticleFlowTest(articleId: String, liked: Boolean) {
+        Log.d("TriggerIds", "likeArticle() before call - likedIds: ${likedIdsForFlow.value}")
+        likedIdsForFlow.update { currentIds ->
             if (liked) {
                 currentIds + articleId // 좋아요 추가
             } else {
                 currentIds - articleId // 좋아요 삭제
             }
         }
-        Log.d("TriggerIds", "likeArticle() after call - likedIds: ${likedIds.value}")
     }
 }

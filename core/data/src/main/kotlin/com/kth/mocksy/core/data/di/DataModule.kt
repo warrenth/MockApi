@@ -17,6 +17,8 @@ package com.kth.mocksy.core.data.di
 
 import com.kth.mocksy.core.data.repository.ArticleRepository
 import com.kth.mocksy.core.data.repository.DefaultArticlesRepository
+import com.kth.mocksy.core.datastore.datastore.DefaultLikedPreferencesDataStore
+import com.kth.mocksy.core.datastore.datastore.LikePreferencesDataStore
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -30,4 +32,7 @@ internal interface DataModule {
     @Binds
     @Singleton
     fun bindsArticlesRepository(articlesRepositoryImpl: DefaultArticlesRepository): ArticleRepository
+
+    @Binds
+    fun bindsLikedDataStore(dataStore: DefaultLikedPreferencesDataStore) : LikePreferencesDataStore
 }

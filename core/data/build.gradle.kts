@@ -11,7 +11,7 @@ android {
 
 dependencies {
     api(projects.core.model)
-
+    implementation(projects.core.datastore)
 
     implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
