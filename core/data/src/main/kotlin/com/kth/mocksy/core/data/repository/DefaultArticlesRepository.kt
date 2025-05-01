@@ -28,20 +28,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 internal class DefaultArticlesRepository @Inject constructor(
     private val mocksyService: MocksyService,
     private val likedDataStore: LikePreferencesDataStore,
+    @Dispatcher(ArticlesDispatcher.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : ArticleRepository {
 
-    private val likedIdsForFlow: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet()) //test
+    private val likedIdsForFlow: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet())
     private val likedIds: Flow<Set<String>> = likedDataStore.likedArticle
+
 
     override fun getArticles(): Flow<List<Article>> = flow {
         emit(mocksyService.fetchArticles().map { it.toData() })
-    }
+    }.flowOn(ioDispatcher)
 
     override fun getLikedArticleIds(): Flow<Set<String>> {
         return likedIds.filterNotNull()

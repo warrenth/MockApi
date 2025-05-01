@@ -1,8 +1,8 @@
 ## DeepDive
 
-Multi-module, DesignSystem
-Navigation, SharedTransition
-SpotLess, ScreenShotTest, UnitTest,
+Architecture: MVVM, Clean Architecture, Multi-Module    
+UI: Compose, SharedTransition, Design System    
+Testing & Code Quality: JUnit, MockK, Turbine, Spotless, MockAPI.io
 
 ## 📷 Previews
 
@@ -277,7 +277,7 @@ SharedTransitionLayout
 ├── composable<Home>
 │   └── HomeScreen(animatedVisibilityScope, sharedTransitionScope)
 └── composable<Detail>
-└── DetailScreen(animatedVisibilityScope, sharedTransitionScope)
+    └── DetailScreen(animatedVisibilityScope, sharedTransitionScope)
 ```
 
 ### 4.1.2 전역 스코프 CompositionLocalProvider
@@ -294,8 +294,8 @@ SharedTransitionLayout
 │   └── CompositionLocalProvider(LocalAnimatedVisibilityScope)
 │       └── HomeScreen() // 내부에서 Local*.current 로 스코프 접근
 └── composable<Detail>
-└── CompositionLocalProvider(LocalAnimatedVisibilityScope)
-└── DetailScreen()
+    └── CompositionLocalProvider(LocalAnimatedVisibilityScope)
+        └── DetailScreen()
 ```
 
 # Spotless

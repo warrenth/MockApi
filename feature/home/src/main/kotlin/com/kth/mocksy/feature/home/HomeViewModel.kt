@@ -27,12 +27,14 @@ import com.kth.mocksy.core.navigation.AppComposeNavigator
 import com.kth.mocksy.core.navigation.MocksyScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
@@ -68,6 +70,7 @@ class HomeViewModel @Inject constructor(
                     .toPersistentList()
             )
         }
+            .flowOn(Dispatchers.Default)
             .catch { throwable ->
                 Log.d("TriggerIds", "combine catch $throwable")
                 _errorFlow.emit(throwable)
