@@ -328,13 +328,13 @@ Spotless 설정을 공통화해서 Convention Plugin 으로 정의 모든 모듈
  # 5. Core:DataStore
 
 ## 5.1 SOLID 원칙 적용
-> 책임 분리 : core:datastore 는 구현 및 DI 제공의 책임, core:data 직접 바인딩해서 사용하는 책임
+> 책임 분리 : core:datastore 는 구현 및 DI 제공의 책임, core:data 직접 바인딩해서 사용하는 책임  
 > 의존성 역전 : core:data 는 core:datastore 의 추상타입에 의존하며 실제 구현은 datastore에 위치 
 
 ### 5.1.1 DataStoreModule 모듈 구성
-> DefaultLikedPreferencesDataStore 에서 @ApplicationContext Hilt가 주입 가능 하지만,
-> Kotlin 컴파일 타임에 Context.dataStore의 확장 프로퍼티를 코드로 생성하기 때문에 생성자 내부에서 사용불가.
-> 초기화 타이밍, 컴파일타임 안전성을 고려하여 DataStore<Preferences> 는 hilt를 통해 provide 로 주입하는게 좋다.
+> DefaultLikedPreferencesDataStore 에서 @ApplicationContext Hilt가 주입 가능 하지만,  
+> Kotlin 컴파일 타임에 Context.dataStore의 확장 프로퍼티를 코드로 생성하기 때문에 생성자 내부에서 사용불가.  
+> 초기화 타이밍, 컴파일타임 안전성을 고려하여 DataStore<Preferences> 는 hilt를 통해 provide 로 주입하는게 좋다.  
 ```kotlin
 @Module
 @InstallIn(SingletonComponent::class)
